@@ -1,147 +1,290 @@
-!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>F1 Drivers - Formula 1 Legend</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Arial', sans-serif;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-            color: #fff;
-            line-height: 1.6;
-        }
-        
-        header {
-            background: #000;
-            padding: 2rem;
-            text-align: center;
-            border-bottom: 3px solid #dc0000;
-        }
-        
-        header h1 {
-            font-size: 2.5rem;
-            color: #dc0000;
-            margin-bottom: 0.5rem;
-        }
-        
-        header p {
-            font-size: 1.1rem;
-            color: #ccc;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 2rem auto;
-            padding: 0 1rem;
-        }
-        
-        .drivers-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-        
-        .driver-card {
-            background: rgba(255, 255, 255, 0.1);
-            border: 2px solid #dc0000;
-            border-radius: 8px;
-            padding: 1.5rem;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        
-        .driver-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(220, 0, 0, 0.4);
-        }
-        
-        .driver-card h3 {
-            color: #dc0000;
-            margin-bottom: 0.5rem;
-            font-size: 1.5rem;
-        }
-        
-        .driver-card p {
-            color: #ddd;
-            margin-bottom: 0.5rem;
-        }
-        
-        footer {
-            text-align: center;
-            padding: 2rem;
-            background: #000;
-            border-top: 3px solid #dc0000;
-            margin-top: 3rem;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>F1 Drivers - Formula 1 Legend</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+      color: #fff;
+      line-height: 1.6;
+    }
+
+    header {
+      background: #000;
+      padding: 1.25rem 1rem;
+      border-bottom: 3px solid #dc0000;
+    }
+
+    /* --- NEW: Header layout with nav --- */
+    .header-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .brand {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    header h1 {
+      font-size: 2.2rem;
+      color: #dc0000;
+      line-height: 1.1;
+    }
+
+    header p {
+      font-size: 1.05rem;
+      color: #ccc;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+
+    nav a {
+      color: #ddd;
+      text-decoration: none;
+      font-weight: 700;
+      padding: 0.5rem 0.75rem;
+      border-radius: 6px;
+      transition: background 0.2s ease, color 0.2s ease;
+    }
+
+    nav a:hover {
+      background: rgba(220, 0, 0, 0.15);
+      color: #fff;
+    }
+
+    /* --- NEW: Burger button --- */
+    .burger {
+      display: none; /* shown on mobile */
+      background: transparent;
+      border: 2px solid #dc0000;
+      border-radius: 8px;
+      padding: 0.6rem 0.65rem;
+      cursor: pointer;
+      align-items: center;
+      justify-content: center;
+      gap: 0.35rem;
+    }
+
+    .burger .line {
+      width: 24px;
+      height: 2px;
+      background: #fff;
+      display: block;
+      transition: transform 0.25s ease, opacity 0.25s ease;
+    }
+
+    /* When open -> turns into an X */
+    .burger.is-open .line:nth-child(1) {
+      transform: translateY(7px) rotate(45deg);
+    }
+    .burger.is-open .line:nth-child(2) {
+      opacity: 0;
+    }
+    .burger.is-open .line:nth-child(3) {
+      transform: translateY(-7px) rotate(-45deg);
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+
+    .drivers-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .driver-card {
+      background: rgba(255, 255, 255, 0.1);
+      border: 2px solid #dc0000;
+      border-radius: 8px;
+      padding: 1.5rem;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .driver-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(220, 0, 0, 0.4);
+    }
+
+    .driver-card h3 {
+      color: #dc0000;
+      margin-bottom: 0.5rem;
+      font-size: 1.5rem;
+    }
+
+    .driver-card p { color: #ddd; margin-bottom: 0.5rem; }
+
+    footer {
+      text-align: center;
+      padding: 2rem;
+      background: #000;
+      border-top: 3px solid #dc0000;
+      margin-top: 3rem;
+    }
+
+    /* --- NEW: Responsive nav (phone) --- */
+    @media (max-width: 768px) {
+      header h1 { font-size: 1.6rem; }
+      header p { font-size: 0.95rem; }
+
+      .burger { display: inline-flex; }
+
+      nav {
+        position: relative;
+      }
+
+      nav ul {
+        position: absolute;
+        right: 0;
+        top: calc(100% + 10px);
+        flex-direction: column;
+        background: #000;
+        border: 2px solid #dc0000;
+        border-radius: 10px;
+        padding: 0.75rem;
+        gap: 0.25rem;
+        min-width: 200px;
+        display: none; /* hidden by default */
+        z-index: 20;
+      }
+
+      nav ul.is-open {
+        display: flex;
+      }
+
+      nav a {
+        width: 100%;
+        padding: 0.6rem 0.75rem;
+      }
+    }
+  </style>
 </head>
 <body>
-    <header>
+  <header>
+    <div class="header-inner">
+      <div class="brand">
         <h1>🏎️ F1 DRIVERS</h1>
         <p>Celebrating the Greatest Drivers in Formula 1 History</p>
-    </header>
-    
-    <div class="container">
-        <div class="drivers-grid">
-            <div class="driver-card">
-                <h3>Lewis Hamilton</h3>
-                <p><strong>Team:</strong> Mercedes</p>
-                <p><strong>Nationality:</strong> British</p>
-                <p><strong>Championships:</strong> 7</p>
-                <p>The most successful driver in F1 history with record-breaking achievements.</p>
-            </div>
-            
-            <div class="driver-card">
-                <h3>Max Verstappen</h3>
-                <p><strong>Team:</strong> Red Bull Racing</p>
-                <p><strong>Nationality:</strong> Dutch</p>
-                <p><strong>Championships:</strong> 4</p>
-                <p>Dominant force of the current era with incredible speed and consistency.</p>
-            </div>
-            
-            <div class="driver-card">
-                <h3>Michael Schumacher</h3>
-                <p><strong>Team:</strong> Ferrari</p>
-                <p><strong>Nationality:</strong> German</p>
-                <p><strong>Championships:</strong> 7</p>
-                <p>Legend of the sport who set many records throughout his career.</p>
-            </div>
-            
-            <div class="driver-card">
-                <h3>Ayrton Senna</h3>
-                <p><strong>Team:</strong> McLaren</p>
-                <p><strong>Nationality:</strong> Brazilian</p>
-                <p><strong>Championships:</strong> 3</p>
-                <p>One of the greatest drivers ever, known for his intense racing style.</p>
-            </div>
-            
-            <div class="driver-card">
-                <h3>Juan Manuel Fangio</h3>
-                <p><strong>Team:</strong> Multiple</p>
-                <p><strong>Nationality:</strong> Argentine</p>
-                <p><strong>Championships:</strong> 5</p>
-                <p>Pioneer of F1 who dominated the early years of the sport.</p>
-            </div>
-            
-            <div class="driver-card">
-                <h3>Alain Prost</h3>
-                <p><strong>Team:</strong> McLaren/Ferrari</p>
-                <p><strong>Nationality:</strong> French</p>
-                <p><strong>Championships:</strong> 4</p>
-                <p>The "Professor" known for his strategic racing intelligence.</p>
-            </div>
-        </div>
+      </div>
+
+      <!-- NEW: nav + burger -->
+      <nav>
+        <button class="burger" id="burgerBtn" aria-label="Open menu" aria-expanded="false" aria-controls="navMenu">
+          <span class="line"></span>
+          <span class="line"></span>
+          <span class="line"></span>
+        </button>
+
+        <ul id="navMenu">
+          <li><a href="#">Home</a></li>
+          <li><a href="#drivers">Drivers</a></li>
+          <li><a href="#about">About</a></li>
+        </ul>
+      </nav>
     </div>
-    
-    <footer>
-        <p>&copy; 2026 F1 Drivers Website. Celebrating Formula 1 Excellence.</p>
-    </footer>
+  </header>
+
+  <div class="container" id="drivers">
+    <div class="drivers-grid">
+      <div class="driver-card">
+        <h3>Lewis Hamilton</h3>
+        <p><strong>Team:</strong> Mercedes</p>
+        <p><strong>Nationality:</strong> British</p>
+        <p><strong>Championships:</strong> 7</p>
+        <p>The most successful driver in F1 history with record-breaking achievements.</p>
+      </div>
+
+      <div class="driver-card">
+        <h3>Max Verstappen</h3>
+        <p><strong>Team:</strong> Red Bull Racing</p>
+        <p><strong>Nationality:</strong> Dutch</p>
+        <p><strong>Championships:</strong> 4</p>
+        <p>Dominant force of the current era with incredible speed and consistency.</p>
+      </div>
+
+      <div class="driver-card">
+        <h3>Michael Schumacher</h3>
+        <p><strong>Team:</strong> Ferrari</p>
+        <p><strong>Nationality:</strong> German</p>
+        <p><strong>Championships:</strong> 7</p>
+        <p>Legend of the sport who set many records throughout his career.</p>
+      </div>
+
+      <div class="driver-card">
+        <h3>Ayrton Senna</h3>
+        <p><strong>Team:</strong> McLaren</p>
+        <p><strong>Nationality:</strong> Brazilian</p>
+        <p><strong>Championships:</strong> 3</p>
+        <p>One of the greatest drivers ever, known for his intense racing style.</p>
+      </div>
+
+      <div class="driver-card">
+        <h3>Juan Manuel Fangio</h3>
+        <p><strong>Team:</strong> Multiple</p>
+        <p><strong>Nationality:</strong> Argentine</p>
+        <p><strong>Championships:</strong> 5</p>
+        <p>Pioneer of F1 who dominated the early years of the sport.</p>
+      </div>
+
+      <div class="driver-card">
+        <h3>Alain Prost</h3>
+        <p><strong>Team:</strong> McLaren/Ferrari</p>
+        <p><strong>Nationality:</strong> French</p>
+        <p><strong>Championships:</strong> 4</p>
+        <p>The "Professor" known for his strategic racing intelligence.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="container" id="about" style="margin-top: 3rem;">
+    <h2 style="color:#dc0000; margin-bottom:0.75rem;">About</h2>
+    <p style="color:#ddd;">A simple responsive site showcasing iconic Formula 1 drivers.</p>
+  </div>
+
+  <footer>
+    <p>&copy; 2026 F1 Drivers Website. Celebrating Formula 1 Excellence.</p>
+  </footer>
+
+  <script>
+    const burgerBtn = document.getElementById('burgerBtn');
+    const navMenu = document.getElementById('navMenu');
+
+    burgerBtn.addEventListener('click', () => {
+      const open = burgerBtn.classList.toggle('is-open');
+      navMenu.classList.toggle('is-open', open);
+      burgerBtn.setAttribute('aria-expanded', String(open));
+      burgerBtn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    });
+
+    // Optional: close menu after clicking a link (mobile)
+    navMenu.addEventListener('click', (e) => {
+      if (e.target.tagName.toLowerCase() === 'a' && window.matchMedia('(max-width: 768px)').matches) {
+        burgerBtn.classList.remove('is-open');
+        navMenu.classList.remove('is-open');
+        burgerBtn.setAttribute('aria-expanded', 'false');
+        burgerBtn.setAttribute('aria-label', 'Open menu');
+      }
+    });
+  </script>
 </body>
-</html> 
+</html>
