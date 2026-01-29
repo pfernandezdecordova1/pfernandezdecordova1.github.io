@@ -1,305 +1,848 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>F1 Drivers - Formula 1 Legend</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Arial', sans-serif;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-            color: #fff;
-            line-height: 1.6;
-        }
-        
-        header {
-            background: #000;
-            padding: 2rem;
-            text-align: center;
-            border-bottom: 3px solid #dc0000;
-            position: relative; /* NEW: so burger can be positioned inside */
-        }
-        
-        header h1 {
-            font-size: 2.5rem;
-            color: #dc0000;
-            margin-bottom: 0.5rem;
-        }
-        
-        header p {
-            font-size: 1.1rem;
-            color: #ccc;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>F1 Drivers - Formula 1 Legend</title>
 
-        /* =========================
-           NEW: Sophisticated burger + mobile menu
-           ========================= */
-        .burger {
-            display: none; /* only visible on mobile */
-            position: absolute;
-            right: 1.25rem;
-            top: 1.25rem;
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
-            width: 48px;
-            height: 48px;
-            border-radius: 12px;
+    :root{
+      --bg1:#1a1a2e;
+      --bg2:#16213e;
+      --black:#000;
+      --red:#dc0000;
+      --text:#ffffff;
+      --muted:#cfcfcf;
+      --card:rgba(255,255,255,0.08);
+      --card2:rgba(255,255,255,0.12);
+      --stroke:rgba(220,0,0,0.55);
+      --shadow: 0 12px 28px rgba(0,0,0,0.45);
+    }
 
-            background: rgba(255,255,255,0.08);
-            border: 1px solid rgba(220, 0, 0, 0.55);
-            backdrop-filter: blur(8px);
+    body{
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, var(--bg1) 0%, var(--bg2) 100%);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
 
-            cursor: pointer;
-            padding: 0;
-        }
+    /* ===== Header / Nav ===== */
+    header{
+      background: rgba(0,0,0,0.9);
+      border-bottom: 3px solid var(--red);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(10px);
+    }
 
-        .burger:focus {
-            outline: 2px solid rgba(220,0,0,0.7);
-            outline-offset: 2px;
-        }
+    .header-inner{
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1rem 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
 
-        .burger span {
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            width: 22px;
-            height: 2px;
-            background: #fff;
-            transform: translate(-50%, -50%);
-            transition: transform 220ms ease, opacity 180ms ease, width 220ms ease;
-            border-radius: 2px;
-        }
+    .brand{
+      display:flex;
+      flex-direction:column;
+      gap:0.15rem;
+    }
 
-        .burger span:nth-child(1) { transform: translate(-50%, calc(-50% - 7px)); width: 20px; }
-        .burger span:nth-child(2) { transform: translate(-50%, -50%); width: 22px; opacity: 0.95; }
-        .burger span:nth-child(3) { transform: translate(-50%, calc(-50% + 7px)); width: 18px; opacity: 0.9; }
+    .brand h1{
+      font-size: 1.55rem;
+      color: var(--red);
+      letter-spacing: 0.5px;
+      line-height: 1.1;
+    }
 
-        /* Open -> morph into X */
-        .burger.is-open span:nth-child(1) { transform: translate(-50%, -50%) rotate(45deg); width: 22px; }
-        .burger.is-open span:nth-child(2) { opacity: 0; }
-        .burger.is-open span:nth-child(3) { transform: translate(-50%, -50%) rotate(-45deg); width: 22px; }
+    .brand p{
+      font-size: 0.95rem;
+      color: var(--muted);
+    }
 
-        /* Overlay menu */
-        .mobile-menu {
-            position: fixed;
-            inset: 0;
-            display: none; /* hidden by default */
-            z-index: 999;
-        }
+    .nav-links{
+      display:flex;
+      align-items:center;
+      gap: 0.75rem;
+      list-style:none;
+    }
 
-        .mobile-menu.is-open { display: block; }
+    .nav-links a{
+      text-decoration:none;
+      color:#ddd;
+      font-weight: 700;
+      padding: 0.55rem 0.75rem;
+      border-radius: 10px;
+      transition: transform .2s ease, background .2s ease, color .2s ease;
+    }
+    .nav-links a:hover{
+      background: rgba(220,0,0,0.18);
+      color:#fff;
+      transform: translateY(-1px);
+    }
 
-        .mobile-menu .backdrop {
-            position: absolute;
-            inset: 0;
-            background: rgba(0,0,0,0.6);
-            backdrop-filter: blur(6px);
-        }
+    .pill{
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.06);
+    }
 
-        .mobile-menu .panel {
-            position: absolute;
-            right: 0;
-            top: 0;
-            height: 100%;
-            width: min(340px, 85vw);
-            background: rgba(0,0,0,0.92);
-            border-left: 3px solid #dc0000;
-            padding: 1.25rem;
-            transform: translateX(100%);
-            transition: transform 240ms ease;
-        }
+    /* ===== Burger ===== */
+    .burger{
+      display:none;
+      position: relative;
+      width: 46px;
+      height: 46px;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid var(--stroke);
+      backdrop-filter: blur(8px);
+      cursor: pointer;
+      padding: 0;
+    }
 
-        .mobile-menu.is-open .panel { transform: translateX(0); }
+    .burger:focus{
+      outline: 2px solid rgba(220,0,0,0.7);
+      outline-offset: 2px;
+    }
 
-        .mobile-menu h2 {
-            color: #dc0000;
-            font-size: 1.2rem;
-            margin-bottom: 0.75rem;
-        }
+    .burger span{
+      position:absolute;
+      left:50%;
+      top:50%;
+      width: 22px;
+      height: 2px;
+      background:#fff;
+      transform: translate(-50%,-50%);
+      transition: transform 220ms ease, opacity 180ms ease, width 220ms ease;
+      border-radius: 2px;
+    }
+    .burger span:nth-child(1){ transform: translate(-50%, calc(-50% - 7px)); width: 20px; }
+    .burger span:nth-child(2){ transform: translate(-50%, -50%); opacity: 0.95; }
+    .burger span:nth-child(3){ transform: translate(-50%, calc(-50% + 7px)); width: 18px; opacity: 0.9; }
 
-        .mobile-menu a {
-            display: block;
-            text-decoration: none;
-            color: #ddd;
-            font-weight: 700;
-            padding: 0.85rem 0.75rem;
-            border-radius: 10px;
-            border: 1px solid rgba(255,255,255,0.08);
-            background: rgba(255,255,255,0.06);
-            margin-bottom: 0.6rem;
-        }
+    .burger.is-open span:nth-child(1){ transform: translate(-50%,-50%) rotate(45deg); width:22px; }
+    .burger.is-open span:nth-child(2){ opacity: 0; }
+    .burger.is-open span:nth-child(3){ transform: translate(-50%,-50%) rotate(-45deg); width:22px; }
 
-        .mobile-menu a:hover {
-            background: rgba(220, 0, 0, 0.18);
-            border-color: rgba(220, 0, 0, 0.5);
-            color: #fff;
-        }
+    /* ===== Mobile menu overlay ===== */
+    .mobile-menu{
+      position: fixed;
+      inset: 0;
+      display: none;
+      z-index: 999;
+    }
+    .mobile-menu.is-open{ display:block; }
 
-        /* Only show burger on small screens */
-        @media (max-width: 768px) {
-            header { padding: 2rem 1.25rem; } /* keep spacing nice on mobile */
-            .burger { display: inline-block; }
-        }
-        /* ========================= */
+    .mobile-menu .backdrop{
+      position:absolute;
+      inset:0;
+      background: rgba(0,0,0,0.65);
+      backdrop-filter: blur(6px);
+    }
 
-        .container {
-            max-width: 1200px;
-            margin: 2rem auto;
-            padding: 0 1rem;
-        }
-        
-        .drivers-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-        
-        .driver-card {
-            background: rgba(255, 255, 255, 0.1);
-            border: 2px solid #dc0000;
-            border-radius: 8px;
-            padding: 1.5rem;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        
-        .driver-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(220, 0, 0, 0.4);
-        }
-        
-        .driver-card h3 {
-            color: #dc0000;
-            margin-bottom: 0.5rem;
-            font-size: 1.5rem;
-        }
-        
-        .driver-card p {
-            color: #ddd;
-            margin-bottom: 0.5rem;
-        }
-        
-        footer {
-            text-align: center;
-            padding: 2rem;
-            background: #000;
-            border-top: 3px solid #dc0000;
-            margin-top: 3rem;
-        }
-    </style>
+    .mobile-menu .panel{
+      position:absolute;
+      right:0;
+      top:0;
+      height:100%;
+      width: min(360px, 88vw);
+      background: rgba(0,0,0,0.92);
+      border-left: 3px solid var(--red);
+      padding: 1.25rem;
+      transform: translateX(100%);
+      transition: transform 240ms ease;
+      box-shadow: -18px 0 40px rgba(0,0,0,0.4);
+    }
+
+    .mobile-menu.is-open .panel{ transform: translateX(0); }
+
+    .mobile-menu h2{
+      color: var(--red);
+      font-size: 1.15rem;
+      margin-bottom: .85rem;
+      letter-spacing: .3px;
+    }
+
+    .mobile-menu a{
+      display:block;
+      text-decoration:none;
+      color:#ddd;
+      font-weight:800;
+      padding: .85rem .75rem;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.10);
+      background: rgba(255,255,255,0.06);
+      margin-bottom: .6rem;
+      transition: background .2s ease, border-color .2s ease;
+    }
+    .mobile-menu a:hover{
+      background: rgba(220,0,0,0.18);
+      border-color: rgba(220,0,0,0.55);
+      color:#fff;
+    }
+
+    /* ===== Hero ===== */
+    .hero{
+      position: relative;
+      min-height: 58vh;
+      display:flex;
+      align-items:center;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .hero::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        linear-gradient(90deg, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.55) 45%, rgba(0,0,0,0.30) 100%),
+        url("https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=2200&q=70");
+      background-size: cover;
+      background-position: center;
+      filter: saturate(1.1) contrast(1.05);
+    }
+
+    .hero-inner{
+      position:relative;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 3rem 1rem;
+      width: 100%;
+      display:grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .hero h2{
+      font-size: clamp(2rem, 4vw, 3rem);
+      line-height: 1.05;
+      margin-bottom: .75rem;
+      letter-spacing: .2px;
+    }
+
+    .hero h2 span{ color: var(--red); }
+
+    .hero p{
+      color: #ddd;
+      max-width: 52ch;
+      margin-bottom: 1.25rem;
+      font-size: 1.05rem;
+    }
+
+    .hero-actions{
+      display:flex;
+      gap:.75rem;
+      flex-wrap: wrap;
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap: .5rem;
+      padding: .8rem 1rem;
+      border-radius: 12px;
+      font-weight: 900;
+      letter-spacing: .2px;
+      text-decoration:none;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.08);
+      color:#fff;
+      transition: transform .2s ease, background .2s ease, border-color .2s ease;
+    }
+    .btn:hover{ transform: translateY(-1px); background: rgba(255,255,255,0.12); }
+    .btn.primary{
+      border-color: rgba(220,0,0,0.65);
+      background: rgba(220,0,0,0.18);
+    }
+    .btn.primary:hover{ background: rgba(220,0,0,0.25); }
+
+    .hero-statcard{
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 16px;
+      padding: 1.1rem;
+      box-shadow: var(--shadow);
+    }
+
+    .hero-statcard .row{
+      display:flex;
+      justify-content:space-between;
+      gap: 1rem;
+      padding: .7rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.10);
+    }
+    .hero-statcard .row:last-child{ border-bottom: none; }
+
+    .k{ color:#bbb; font-weight:700; }
+    .v{ color:#fff; font-weight:900; }
+
+    /* ===== Main ===== */
+    .container{
+      max-width: 1200px;
+      margin: 2.2rem auto;
+      padding: 0 1rem;
+    }
+
+    .section-title{
+      display:flex;
+      align-items:flex-end;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 1.1rem;
+    }
+    .section-title h3{
+      font-size: 1.4rem;
+      color: #fff;
+      letter-spacing: .2px;
+    }
+    .section-title small{
+      color:#bbb;
+    }
+
+    .drivers-grid{
+      display:grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .driver-card{
+      background: var(--card);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-top: 3px solid var(--red);
+      border-radius: 16px;
+      overflow:hidden;
+      box-shadow: 0 10px 24px rgba(0,0,0,0.28);
+      transition: transform .22s ease, box-shadow .22s ease, background .22s ease;
+      cursor: pointer;
+    }
+
+    .driver-card:hover{
+      transform: translateY(-4px);
+      background: var(--card2);
+      box-shadow: 0 16px 34px rgba(0,0,0,0.42);
+    }
+
+    .driver-media{
+      height: 190px;
+      background: rgba(255,255,255,0.06);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .driver-media img{
+      width:100%;
+      height:100%;
+      object-fit: cover;
+      transform: scale(1.02);
+      transition: transform .35s ease;
+      filter: contrast(1.05) saturate(1.05);
+    }
+    .driver-card:hover .driver-media img{ transform: scale(1.08); }
+
+    .badge{
+      position:absolute;
+      left: 12px;
+      top: 12px;
+      padding: .35rem .6rem;
+      border-radius: 999px;
+      font-weight: 900;
+      font-size: .78rem;
+      letter-spacing: .2px;
+      background: rgba(0,0,0,0.55);
+      border: 1px solid rgba(255,255,255,0.18);
+    }
+
+    .driver-body{
+      padding: 1rem 1rem 1.05rem;
+    }
+
+    .driver-body h4{
+      color: var(--red);
+      font-size: 1.25rem;
+      margin-bottom: .35rem;
+      letter-spacing: .2px;
+    }
+
+    .meta{
+      display:flex;
+      flex-wrap: wrap;
+      gap: .5rem;
+      margin-bottom: .7rem;
+      color:#ddd;
+      font-size: .95rem;
+    }
+    .chip{
+      padding: .28rem .55rem;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.06);
+      font-weight: 800;
+      color:#e9e9e9;
+      font-size: .82rem;
+    }
+
+    .driver-body p{
+      color:#ddd;
+      opacity: .95;
+    }
+
+    /* ===== Modal ===== */
+    .modal{
+      position: fixed;
+      inset: 0;
+      display: none;
+      z-index: 1000;
+    }
+    .modal.is-open{ display:block; }
+
+    .modal .overlay{
+      position:absolute;
+      inset:0;
+      background: rgba(0,0,0,0.7);
+      backdrop-filter: blur(6px);
+    }
+
+    .modal .content{
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: min(880px, 92vw);
+      border-radius: 18px;
+      overflow:hidden;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(0,0,0,0.92);
+      box-shadow: var(--shadow);
+    }
+
+    .modal-grid{
+      display:grid;
+      grid-template-columns: 1fr 1.1fr;
+    }
+
+    .modal-img{
+      min-height: 320px;
+      background:#111;
+    }
+
+    .modal-img img{
+      width:100%;
+      height:100%;
+      object-fit: cover;
+    }
+
+    .modal-info{
+      padding: 1.25rem;
+    }
+
+    .modal-info h3{
+      color: var(--red);
+      font-size: 1.55rem;
+      margin-bottom: .4rem;
+    }
+
+    .modal-info .subtitle{
+      color:#ddd;
+      margin-bottom: 1rem;
+    }
+
+    .modal-info .facts{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: .75rem;
+      margin-bottom: 1rem;
+    }
+
+    .fact{
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.10);
+      border-radius: 14px;
+      padding: .75rem;
+    }
+    .fact .k{ color:#bbb; font-weight:700; font-size: .85rem; }
+    .fact .v{ color:#fff; font-weight:900; font-size: 1rem; }
+
+    .modal-info .bio{
+      color:#ddd;
+      line-height: 1.65;
+    }
+
+    .close{
+      position:absolute;
+      right: 12px;
+      top: 12px;
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.14);
+      background: rgba(255,255,255,0.08);
+      color: #fff;
+      font-weight: 900;
+      cursor:pointer;
+    }
+    .close:hover{
+      background: rgba(220,0,0,0.20);
+      border-color: rgba(220,0,0,0.55);
+    }
+
+    /* ===== Footer ===== */
+    footer{
+      text-align:center;
+      padding: 2rem 1rem;
+      background: rgba(0,0,0,0.92);
+      border-top: 3px solid var(--red);
+      margin-top: 3rem;
+      color:#ddd;
+    }
+
+    /* ===== Responsive ===== */
+    @media (max-width: 900px){
+      .hero-inner{ grid-template-columns: 1fr; }
+      .hero-statcard{ max-width: 520px; }
+    }
+
+    @media (max-width: 768px){
+      .nav-links{ display:none; }
+      .burger{ display:inline-block; }
+      .modal-grid{ grid-template-columns: 1fr; }
+      .modal-img{ min-height: 260px; }
+    }
+  </style>
 </head>
-<body>
-    <header>
+
+<body id="top">
+  <header>
+    <div class="header-inner">
+      <div class="brand">
         <h1>🏎️ F1 DRIVERS</h1>
-        <p>Celebrating the Greatest Drivers in Formula 1 History</p>
+        <p>Celebrating Formula 1 Excellence</p>
+      </div>
 
-        <!-- NEW: burger button (mobile only) -->
-        <button class="burger" id="burgerBtn" aria-label="Open menu" aria-expanded="false">
-            <span></span><span></span><span></span>
-        </button>
-    </header>
+      <ul class="nav-links">
+        <li><a href="#drivers">Drivers</a></li>
+        <li><a class="pill" href="#about">About</a></li>
+        <li><a class="pill" href="#top">Top</a></li>
+      </ul>
 
-    <!-- NEW: overlay mobile menu -->
-    <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
-        <div class="backdrop" id="menuBackdrop"></div>
-        <div class="panel" role="dialog" aria-modal="true" aria-label="Navigation menu">
-            <h2>Menu</h2>
-            <a href="#drivers">Drivers</a>
-            <a href="#top">Top</a>
-        </div>
+      <button class="burger" id="burgerBtn" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
     </div>
-    
-    <div class="container" id="drivers">
-        <div class="drivers-grid">
-            <div class="driver-card">
-                <h3>Lewis Hamilton</h3>
-                <p><strong>Team:</strong> Mercedes</p>
-                <p><strong>Nationality:</strong> British</p>
-                <p><strong>Championships:</strong> 7</p>
-                <p>The most successful driver in F1 history with record-breaking achievements.</p>
-            </div>
-            
-            <div class="driver-card">
-                <h3>Max Verstappen</h3>
-                <p><strong>Team:</strong> Red Bull Racing</p>
-                <p><strong>Nationality:</strong> Dutch</p>
-                <p><strong>Championships:</strong> 4</p>
-                <p>Dominant force of the current era with incredible speed and consistency.</p>
-            </div>
-            
-            <div class="driver-card">
-                <h3>Michael Schumacher</h3>
-                <p><strong>Team:</strong> Ferrari</p>
-                <p><strong>Nationality:</strong> German</p>
-                <p><strong>Championships:</strong> 7</p>
-                <p>Legend of the sport who set many records throughout his career.</p>
-            </div>
-            
-            <div class="driver-card">
-                <h3>Ayrton Senna</h3>
-                <p><strong>Team:</strong> McLaren</p>
-                <p><strong>Nationality:</strong> Brazilian</p>
-                <p><strong>Championships:</strong> 3</p>
-                <p>One of the greatest drivers ever, known for his intense racing style.</p>
-            </div>
-            
-            <div class="driver-card">
-                <h3>Juan Manuel Fangio</h3>
-                <p><strong>Team:</strong> Multiple</p>
-                <p><strong>Nationality:</strong> Argentine</p>
-                <p><strong>Championships:</strong> 5</p>
-                <p>Pioneer of F1 who dominated the early years of the sport.</p>
-            </div>
-            
-            <div class="driver-card">
-                <h3>Alain Prost</h3>
-                <p><strong>Team:</strong> McLaren/Ferrari</p>
-                <p><strong>Nationality:</strong> French</p>
-                <p><strong>Championships:</strong> 4</p>
-                <p>The "Professor" known for his strategic racing intelligence.</p>
-            </div>
-        </div>
+  </header>
+
+  <!-- Mobile menu -->
+  <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+    <div class="backdrop" id="menuBackdrop"></div>
+    <div class="panel" role="dialog" aria-modal="true" aria-label="Navigation menu">
+      <h2>Menu</h2>
+      <a href="#drivers">Drivers</a>
+      <a href="#about">About</a>
+      <a href="#top">Top</a>
     </div>
-    
-    <footer>
-        <p>&copy; 2026 F1 Drivers Website. Celebrating Formula 1 Excellence.</p>
-    </footer>
+  </div>
 
-    <!-- NEW: tiny JS to toggle burger + menu -->
-    <script>
-        const burgerBtn = document.getElementById('burgerBtn');
-        const mobileMenu = document.getElementById('mobileMenu');
-        const menuBackdrop = document.getElementById('menuBackdrop');
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-inner">
+      <div>
+        <h2>Formula 1 <span>Legends</span> & Modern Icons</h2>
+        <p>
+          Explore the drivers who defined eras — from the pioneers who built the sport to the champions
+          who dominate today. Tap a driver to view a clean profile card.
+        </p>
+        <div class="hero-actions">
+          <a class="btn primary" href="#drivers">Browse Drivers</a>
+          <a class="btn" href="#about">About This Site</a>
+        </div>
+      </div>
 
-        function setMenu(open) {
-            burgerBtn.classList.toggle('is-open', open);
-            mobileMenu.classList.toggle('is-open', open);
-            burgerBtn.setAttribute('aria-expanded', String(open));
-            mobileMenu.setAttribute('aria-hidden', String(!open));
-            burgerBtn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
-        }
+      <div class="hero-statcard" aria-label="Quick stats">
+        <div class="row"><span class="k">Drivers featured</span><span class="v">6</span></div>
+        <div class="row"><span class="k">Total championships</span><span class="v">30</span></div>
+        <div class="row"><span class="k">Era coverage</span><span class="v">1950 → 2026</span></div>
+        <div class="row"><span class="k">Theme</span><span class="v">F1 Black & Red</span></div>
+      </div>
+    </div>
+  </section>
 
-        burgerBtn.addEventListener('click', () => {
-            const open = !burgerBtn.classList.contains('is-open');
-            setMenu(open);
+  <main class="container" id="drivers">
+    <div class="section-title">
+      <h3>Featured Drivers</h3>
+      <small>Click a card for details</small>
+    </div>
+
+    <div class="drivers-grid">
+      <!-- NOTE: Images are public URLs. You can replace them with your own later. -->
+
+      <div class="driver-card"
+        data-name="Lewis Hamilton"
+        data-team="Mercedes"
+        data-nationality="British"
+        data-championships="7"
+        data-era="Modern Era"
+        data-img="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1600&q=70"
+        data-bio="A seven-time World Champion known for consistency, racecraft, and record-setting success across multiple seasons.">
+        <div class="driver-media">
+          <span class="badge">7× Champion</span>
+          <img alt="F1 car" src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1600&q=70">
+        </div>
+        <div class="driver-body">
+          <h4>Lewis Hamilton</h4>
+          <div class="meta">
+            <span class="chip">Mercedes</span>
+            <span class="chip">British</span>
+            <span class="chip">7 Titles</span>
+          </div>
+          <p>Record-breaking achievements and elite performance across a historic career.</p>
+        </div>
+      </div>
+
+      <div class="driver-card"
+        data-name="Max Verstappen"
+        data-team="Red Bull Racing"
+        data-nationality="Dutch"
+        data-championships="4"
+        data-era="Current Era"
+        data-img="https://images.unsplash.com/photo-1525104698733-6b2a0a3f0f66?auto=format&fit=crop&w=1600&q=70"
+        data-bio="A defining talent of the current era, combining raw speed with control and relentless consistency at the front.">
+        <div class="driver-media">
+          <span class="badge">4× Champion</span>
+          <img alt="F1 car" src="https://images.unsplash.com/photo-1525104698733-6b2a0a3f0f66?auto=format&fit=crop&w=1600&q=70">
+        </div>
+        <div class="driver-body">
+          <h4>Max Verstappen</h4>
+          <div class="meta">
+            <span class="chip">Red Bull</span>
+            <span class="chip">Dutch</span>
+            <span class="chip">4 Titles</span>
+          </div>
+          <p>Dominant force with relentless pace, precision, and race-winning instincts.</p>
+        </div>
+      </div>
+
+      <div class="driver-card"
+        data-name="Michael Schumacher"
+        data-team="Ferrari"
+        data-nationality="German"
+        data-championships="7"
+        data-era="2000s Peak"
+        data-img="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1600&q=70"
+        data-bio="A sport-defining champion whose era at Ferrari set standards for excellence, preparation, and peak performance.">
+        <div class="driver-media">
+          <span class="badge">7× Champion</span>
+          <img alt="Race car" src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1600&q=70">
+        </div>
+        <div class="driver-body">
+          <h4>Michael Schumacher</h4>
+          <div class="meta">
+            <span class="chip">Ferrari</span>
+            <span class="chip">German</span>
+            <span class="chip">7 Titles</span>
+          </div>
+          <p>Legendary benchmark for dominance, discipline, and iconic championship runs.</p>
+        </div>
+      </div>
+
+      <div class="driver-card"
+        data-name="Ayrton Senna"
+        data-team="McLaren"
+        data-nationality="Brazilian"
+        data-championships="3"
+        data-era="Golden Era"
+        data-img="https://images.unsplash.com/photo-1542362567-b07e54358753?auto=format&fit=crop&w=1600&q=70"
+        data-bio="A driver celebrated for intensity, talent in the rain, and a legacy that transcends statistics.">
+        <div class="driver-media">
+          <span class="badge">3× Champion</span>
+          <img alt="Race car" src="https://images.unsplash.com/photo-1542362567-b07e54358753?auto=format&fit=crop&w=1600&q=70">
+        </div>
+        <div class="driver-body">
+          <h4>Ayrton Senna</h4>
+          <div class="meta">
+            <span class="chip">McLaren</span>
+            <span class="chip">Brazil</span>
+            <span class="chip">3 Titles</span>
+          </div>
+          <p>Icon of speed, spirituality, and fearless precision under pressure.</p>
+        </div>
+      </div>
+
+      <div class="driver-card"
+        data-name="Juan Manuel Fangio"
+        data-team="Multiple"
+        data-nationality="Argentine"
+        data-championships="5"
+        data-era="F1 Pioneer"
+        data-img="https://images.unsplash.com/photo-1525609004556-c46c7d6cf023?auto=format&fit=crop&w=1600&q=70"
+        data-bio="A pioneer who dominated the earliest era of Formula 1 with unmatched win rates and tactical mastery.">
+        <div class="driver-media">
+          <span class="badge">5× Champion</span>
+          <img alt="Classic racing" src="https://images.unsplash.com/photo-1525609004556-c46c7d6cf023?auto=format&fit=crop&w=1600&q=70">
+        </div>
+        <div class="driver-body">
+          <h4>Juan Manuel Fangio</h4>
+          <div class="meta">
+            <span class="chip">Multiple Teams</span>
+            <span class="chip">Argentina</span>
+            <span class="chip">5 Titles</span>
+          </div>
+          <p>Early-era legend known for precision, composure, and relentless wins.</p>
+        </div>
+      </div>
+
+      <div class="driver-card"
+        data-name="Alain Prost"
+        data-team="McLaren/Ferrari"
+        data-nationality="French"
+        data-championships="4"
+        data-era="Strategist"
+        data-img="https://images.unsplash.com/photo-1519682337058-a94d519337bc?auto=format&fit=crop&w=1600&q=70"
+        data-bio="Nicknamed 'The Professor' for strategic brilliance — optimizing pace, tyres, and decisions across a championship career.">
+        <div class="driver-media">
+          <span class="badge">4× Champion</span>
+          <img alt="Racing detail" src="https://images.unsplash.com/photo-1519682337058-a94d519337bc?auto=format&fit=crop&w=1600&q=70">
+        </div>
+        <div class="driver-body">
+          <h4>Alain Prost</h4>
+          <div class="meta">
+            <span class="chip">McLaren/Ferrari</span>
+            <span class="chip">France</span>
+            <span class="chip">4 Titles</span>
+          </div>
+          <p>Smart, strategic driving — a masterclass in race management and control.</p>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <section class="container" id="about" style="margin-top:2.5rem;">
+    <div class="section-title">
+      <h3>About</h3>
+      <small>Simple, clean, responsive</small>
+    </div>
+    <p style="color:#ddd; max-width: 80ch;">
+      This is a lightweight, front-end-only website built with HTML/CSS/JS. It uses a modern F1 color palette,
+      a hero banner, responsive navigation, and interactive driver cards. You can swap the images with official driver
+      portraits later (or your own uploaded images) to make it feel even more authentic.
+    </p>
+  </section>
+
+  <footer>
+    <p>&copy; 2026 F1 Drivers Website. Built in HTML + CSS + JavaScript.</p>
+  </footer>
+
+  <!-- Driver modal -->
+  <div class="modal" id="driverModal" aria-hidden="true">
+    <div class="overlay" id="modalOverlay"></div>
+    <div class="content" role="dialog" aria-modal="true" aria-label="Driver details">
+      <button class="close" id="modalClose" aria-label="Close">✕</button>
+      <div class="modal-grid">
+        <div class="modal-img">
+          <img id="modalImg" alt="Driver image" src="" />
+        </div>
+        <div class="modal-info">
+          <h3 id="modalName">Driver</h3>
+          <div class="subtitle" id="modalSubtitle"></div>
+          <div class="facts">
+            <div class="fact"><div class="k">Team</div><div class="v" id="modalTeam"></div></div>
+            <div class="fact"><div class="k">Nationality</div><div class="v" id="modalNat"></div></div>
+            <div class="fact"><div class="k">Championships</div><div class="v" id="modalCh"></div></div>
+            <div class="fact"><div class="k">Era</div><div class="v" id="modalEra"></div></div>
+          </div>
+          <p class="bio" id="modalBio"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ===== Mobile menu toggle =====
+    const burgerBtn = document.getElementById('burgerBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const menuBackdrop = document.getElementById('menuBackdrop');
+
+    function setMenu(open){
+      burgerBtn.classList.toggle('is-open', open);
+      mobileMenu.classList.toggle('is-open', open);
+      burgerBtn.setAttribute('aria-expanded', String(open));
+      mobileMenu.setAttribute('aria-hidden', String(!open));
+      burgerBtn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    }
+
+    burgerBtn.addEventListener('click', () => {
+      setMenu(!burgerBtn.classList.contains('is-open'));
+    });
+
+    menuBackdrop.addEventListener('click', () => setMenu(false));
+    mobileMenu.addEventListener('click', (e) => {
+      if (e.target.tagName && e.target.tagName.toLowerCase() === 'a') setMenu(false);
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') { setMenu(false); closeModal(); }
+    });
+
+    // ===== Driver modal =====
+    const modal = document.getElementById('driverModal');
+    const modalOverlay = document.getElementById('modalOverlay');
+    const modalClose = document.getElementById('modalClose');
+
+    const modalImg = document.getElementById('modalImg');
+    const modalName = document.getElementById('modalName');
+    const modalSubtitle = document.getElementById('modalSubtitle');
+    const modalTeam = document.getElementById('modalTeam');
+    const modalNat = document.getElementById('modalNat');
+    const modalCh = document.getElementById('modalCh');
+    const modalEra = document.getElementById('modalEra');
+    const modalBio = document.getElementById('modalBio');
+
+    function openModal(data){
+      modal.classList.add('is-open');
+      modal.setAttribute('aria-hidden', 'false');
+
+      modalImg.src = data.img;
+      modalName.textContent = data.name;
+      modalSubtitle.textContent = `${data.team} • ${data.nationality}`;
+      modalTeam.textContent = data.team;
+      modalNat.textContent = data.nationality;
+      modalCh.textContent = data.championships;
+      modalEra.textContent = data.era;
+      modalBio.textContent = data.bio;
+
+      // prevent background scroll
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal(){
+      modal.classList.remove('is-open');
+      modal.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+
+    modalOverlay.addEventListener('click', closeModal);
+    modalClose.addEventListener('click', closeModal);
+
+    document.querySelectorAll('.driver-card').forEach(card => {
+      card.addEventListener('click', () => {
+        openModal({
+          name: card.dataset.name,
+          team: card.dataset.team,
+          nationality: card.dataset.nationality,
+          championships: card.dataset.championships,
+          era: card.dataset.era,
+          img: card.dataset.img,
+          bio: card.dataset.bio
         });
-
-        menuBackdrop.addEventListener('click', () => setMenu(false));
-
-        // Close when clicking a link
-        mobileMenu.addEventListener('click', (e) => {
-            if (e.target.tagName && e.target.tagName.toLowerCase() === 'a') setMenu(false);
-        });
-
-        // Close with ESC
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') setMenu(false);
-        });
-    </script>
+      });
+    });
+  </script>
 </body>
 </html>
