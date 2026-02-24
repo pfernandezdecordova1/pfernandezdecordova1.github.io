@@ -533,7 +533,7 @@
   <body id="top">
     <a class="skip" href="#drivers">Skip to drivers</a>
 
-    <!-- Intro overlay -->
+    <!-- === Intro overlay === -->
     <div class="intro" id="intro">
       <div class="intro-inner">
         <div class="intro-title">
@@ -554,7 +554,7 @@
             <div class="wheel back"></div>
           </div>
         </div>
-        <div class="intro-note">Tip: open on mobile — the menu becomes the burger.</div>
+        <div class="intro-note">💡 Tip: Open on mobile — the menu transforms into a burger menu.</div>
       </div>
     </div>
 
@@ -649,26 +649,105 @@
         </div>
 
         <div class="grid" id="driversGrid">
-          <!-- NEW: Fernando Alonso -->
+          <!-- === MODERN ERA === -->
+
+          <!-- Max Verstappen -->
+          <article class="card driver" data-id="verstappen" data-name="max verstappen" data-era="modern" data-champs="4">
+            <button class="favBtn" type="button" aria-label="Toggle favorite Max Verstappen" title="Favorite" data-on="false">★</button>
+            <div class="driver-media">
+              <span class="label">Driver Portrait</span>
+              <img loading="lazy" src="https://commons.wikimedia.org/wiki/Special:FilePath/Max%20Verstappen%202017%20Malaysia%203.jpg" alt="Max Verstappen portrait" />
+            </div>
+            <div class="driverName"><h3>Max Verstappen</h3><span class="tag">Modern</span></div>
+            <div class="meta">
+              <p><span>Nationality:</span> 🇳🇱 Dutch</p>
+              <p><span>Championships:</span> 4 (2021, 2022, 2023, 2024)</p>
+              <p><span>Wins:</span> 60+</p>
+            </div>
+            <p class="desc">Aggressive, precise, and devastatingly fast — a defining driver of his generation. Known for racecraft, bravery in overtakes, and dominant car control.</p>
+          </article>
+
+          <!-- Lewis Hamilton -->
+          <article class="card driver" data-id="hamilton" data-name="lewis hamilton" data-era="modern" data-champs="7">
+            <button class="favBtn" type="button" aria-label="Toggle favorite Lewis Hamilton" title="Favorite" data-on="false">★</button>
+            <div class="driver-media">
+              <span class="label">Driver Portrait</span>
+              <img loading="lazy" src="https://commons.wikimedia.org/wiki/Special:FilePath/Lewis%20Hamilton%20280607.JPG" alt="Lewis Hamilton portrait" />
+            </div>
+            <div class="driverName"><h3>Lewis Hamilton</h3><span class="tag">Modern</span></div>
+            <div class="meta">
+              <p><span>Nationality:</span> 🇬🇧 British</p>
+              <p><span>Championships:</span> 7 (2008, 2014–2015, 2017–2019, 2020)</p>
+              <p><span>Wins:</span> 100+</p>
+            </div>
+            <p class="desc">Record-setting winner known for consistency, racecraft, and relentless pace. Tied for most world titles, versatile across eras, and a motorsport icon.</p>
+          </article>
+
+          <!-- Lando Norris -->
+          <article class="card driver" data-id="norris" data-name="lando norris" data-era="modern" data-champs="0">
+            <button class="favBtn" type="button" aria-label="Toggle favorite Lando Norris" title="Favorite" data-on="false">★</button>
+            <div class="driver-media">
+              <span class="label">Driver Portrait</span>
+              <img loading="lazy" src="https://commons.wikimedia.org/wiki/Special:FilePath/Lando_Norris_2024_Bahrain_GP.jpg" alt="Lando Norris portrait" />
+            </div>
+            <div class="driverName"><h3>Lando Norris</h3><span class="tag">Modern</span></div>
+            <div class="meta">
+              <p><span>Nationality:</span> 🇬🇧 British</p>
+              <p><span>Championships:</span> 0</p>
+              <p><span>Wins:</span> 5+</p>
+            </div>
+            <p class="desc">Talented young gun with smooth racecraft, mental resilience, and consistent point-scoring ability. Rising star of McLaren's resurgence.</p>
+          </article>
+
+          <!-- Charles Leclerc -->
+          <article class="card driver" data-id="leclerc" data-name="charles leclerc" data-era="modern" data-champs="0">
+            <button class="favBtn" type="button" aria-label="Toggle favorite Charles Leclerc" title="Favorite" data-on="false">★</button>
+            <div class="driver-media">
+              <span class="label">Driver Portrait</span>
+              <img loading="lazy" src="https://commons.wikimedia.org/wiki/Special:FilePath/Charles_Leclerc_2023_Monaco.jpg" alt="Charles Leclerc portrait" />
+            </div>
+            <div class="driverName"><h3>Charles Leclerc</h3><span class="tag">Modern</span></div>
+            <div class="meta">
+              <p><span>Nationality:</span> 🇲🇨 Monégasque</p>
+              <p><span>Championships:</span> 0</p>
+              <p><span>Wins:</span> 5+</p>
+            </div>
+            <p class="desc">Ferrari's passionate lead driver with strong qualifying pace, silky smooth racecraft, and fierce determination. Monaco specialist with big race experience.</p>
+          </article>
+
+          <!-- Sergio Perez -->
+          <article class="card driver" data-id="perez" data-name="sergio perez" data-era="modern" data-champs="0">
+            <button class="favBtn" type="button" aria-label="Toggle favorite Sergio Perez" title="Favorite" data-on="false">★</button>
+            <div class="driver-media">
+              <span class="label">Driver Portrait</span>
+              <img loading="lazy" src="https://commons.wikimedia.org/wiki/Special:FilePath/Sergio_Perez_2023.jpg" alt="Sergio Perez portrait" />
+            </div>
+            <div class="driverName"><h3>Sergio Pérez</h3><span class="tag">Modern</span></div>
+            <div class="meta">
+              <p><span>Nationality:</span> 🇲🇽 Mexican</p>
+              <p><span>Championships:</span> 0</p>
+              <p><span>Wins:</span> 6</p>
+            </div>
+            <p class="desc">Smooth operator with excellent racecraft and tire management. Strong on street circuits, known for defensive driving and strategic awareness.</p>
+          </article>
+
+          <!-- Fernando Alonso -->
           <article class="card driver" data-id="alonso" data-name="fernando alonso" data-era="modern" data-champs="2">
             <button class="favBtn" type="button" aria-label="Toggle favorite Fernando Alonso" title="Favorite" data-on="false">★</button>
             <div class="driver-media">
               <span class="label">Driver Portrait</span>
-              <img
-                loading="lazy"
-                src="https://commons.wikimedia.org/wiki/Special:FilePath/Alonso-68%20(24710447098).jpg"
-                alt="Fernando Alonso portrait"
-              />
+              <img loading="lazy" src="https://commons.wikimedia.org/wiki/Special:FilePath/Alonso-68%20(24710447098).jpg" alt="Fernando Alonso portrait" />
             </div>
             <div class="driverName">
               <h3>Fernando Alonso</h3>
               <span class="tag">Modern</span>
             </div>
             <div class="meta">
-              <p><span>Nationality:</span> Spanish</p>
-              <p><span>Championships:</span> 2</p>
+              <p><span>Nationality:</span> 🇪🇸 Spanish</p>
+              <p><span>Championships:</span> 2 (2005, 2006)</p>
+              <p><span>Wins:</span> 32</p>
             </div>
-            <p class="desc">Two-time world champion — elite race IQ, long-term pace, and legendary comeback drives.</p>
+            <p class="desc">Two-time world champion with elite race IQ, long-term pace, and legendary comeback drives. Master of consistency and mental toughness throughout his career.</p>
           </article>
 
           <!-- NEW: Carlos Sainz -->
@@ -693,35 +772,55 @@
             <p class="desc">Smooth, fast, and adaptable — strong qualifying, smart strategy reads, and relentless consistency.</p>
           </article>
 
-          <!-- Lewis Hamilton -->
-          <article class="card driver" data-id="hamilton" data-name="lewis hamilton" data-era="modern" data-champs="7">
-            <button class="favBtn" type="button" aria-label="Toggle favorite Lewis Hamilton" title="Favorite" data-on="false">★</button>
+          <!-- Lando Norris -->
+          <article class="card driver" data-id="norris" data-name="lando norris" data-era="modern" data-champs="0">
+            <button class="favBtn" type="button" aria-label="Toggle favorite Lando Norris" title="Favorite" data-on="false">★</button>
             <div class="driver-media">
               <span class="label">Driver Portrait</span>
-              <img loading="lazy" src="https://commons.wikimedia.org/wiki/Special:FilePath/Lewis%20Hamilton%20280607.JPG" alt="Lewis Hamilton portrait" />
+              <img loading="lazy" src="https://commons.wikimedia.org/wiki/Special:FilePath/Lando_Norris_2024_Bahrain_GP.jpg" alt="Lando Norris portrait" />
             </div>
-            <div class="driverName"><h3>Lewis Hamilton</h3><span class="tag">Modern</span></div>
+            <div class="driverName"><h3>Lando Norris</h3><span class="tag">Modern</span></div>
             <div class="meta">
-              <p><span>Nationality:</span> British</p>
-              <p><span>Championships:</span> 7</p>
+              <p><span>Nationality:</span> 🇬🇧 British</p>
+              <p><span>Championships:</span> 0</p>
+              <p><span>Wins:</span> 5+</p>
             </div>
-            <p class="desc">Record-setting winner known for consistency, racecraft, and relentless pace.</p>
+            <p class="desc">Talented young gun with smooth racecraft, mental resilience, and consistent point-scoring ability. Rising star of McLaren's resurgence.</p>
           </article>
 
-          <!-- Max Verstappen -->
-          <article class="card driver" data-id="verstappen" data-name="max verstappen" data-era="modern" data-champs="4">
-            <button class="favBtn" type="button" aria-label="Toggle favorite Max Verstappen" title="Favorite" data-on="false">★</button>
+          <!-- Charles Leclerc -->
+          <article class="card driver" data-id="leclerc" data-name="charles leclerc" data-era="modern" data-champs="0">
+            <button class="favBtn" type="button" aria-label="Toggle favorite Charles Leclerc" title="Favorite" data-on="false">★</button>
             <div class="driver-media">
               <span class="label">Driver Portrait</span>
-              <img loading="lazy" src="https://commons.wikimedia.org/wiki/Special:FilePath/Max%20Verstappen%202017%20Malaysia%203.jpg" alt="Max Verstappen portrait" />
+              <img loading="lazy" src="https://commons.wikimedia.org/wiki/Special:FilePath/Charles_Leclerc_2023_Monaco.jpg" alt="Charles Leclerc portrait" />
             </div>
-            <div class="driverName"><h3>Max Verstappen</h3><span class="tag">Modern</span></div>
+            <div class="driverName"><h3>Charles Leclerc</h3><span class="tag">Modern</span></div>
             <div class="meta">
-              <p><span>Nationality:</span> Dutch</p>
-              <p><span>Championships:</span> 4</p>
+              <p><span>Nationality:</span> 🇲🇨 Monégasque</p>
+              <p><span>Championships:</span> 0</p>
+              <p><span>Wins:</span> 5+</p>
             </div>
-            <p class="desc">Aggressive, precise, and devastatingly fast — a defining driver of his generation.</p>
+            <p class="desc">Ferrari's passionate lead driver with strong qualifying pace, silky smooth racecraft, and fierce determination. Monaco specialist with big race experience.</p>
           </article>
+
+          <!-- Sergio Perez -->
+          <article class="card driver" data-id="perez" data-name="sergio perez" data-era="modern" data-champs="0">
+            <button class="favBtn" type="button" aria-label="Toggle favorite Sergio Perez" title="Favorite" data-on="false">★</button>
+            <div class="driver-media">
+              <span class="label">Driver Portrait</span>
+              <img loading="lazy" src="https://commons.wikimedia.org/wiki/Special:FilePath/Sergio_Perez_2023.jpg" alt="Sergio Perez portrait" />
+            </div>
+            <div class="driverName"><h3>Sergio Pérez</h3><span class="tag">Modern</span></div>
+            <div class="meta">
+              <p><span>Nationality:</span> 🇲🇽 Mexican</p>
+              <p><span>Championships:</span> 0</p>
+              <p><span>Wins:</span> 6</p>
+            </div>
+            <p class="desc">Smooth operator with excellent racecraft and tire management. Strong on street circuits, known for defensive driving and strategic awareness.</p>
+          </article>
+
+          <!-- === CLASSIC ERA === -->
 
           <!-- Michael Schumacher -->
           <article class="card driver" data-id="schumacher" data-name="michael schumacher" data-era="classic" data-champs="7">
@@ -732,10 +831,11 @@
             </div>
             <div class="driverName"><h3>Michael Schumacher</h3><span class="tag">Classic</span></div>
             <div class="meta">
-              <p><span>Nationality:</span> German</p>
-              <p><span>Championships:</span> 7</p>
+              <p><span>Nationality:</span> 🇩🇪 German</p>
+              <p><span>Championships:</span> 7 (1994–1995, 2000–2004)</p>
+              <p><span>Wins:</span> 91</p>
             </div>
-            <p class="desc">A benchmark for dominance and preparation — shaped modern F1 professionalism.</p>
+            <p class="desc">A benchmark for dominance and preparation — shaped modern F1 professionalism. Ruthless, ambitious, and built Ferrari into a championship machine.</p>
           </article>
 
           <!-- Ayrton Senna -->
@@ -747,10 +847,11 @@
             </div>
             <div class="driverName"><h3>Ayrton Senna</h3><span class="tag">Classic</span></div>
             <div class="meta">
-              <p><span>Nationality:</span> Brazilian</p>
-              <p><span>Championships:</span> 3</p>
+              <p><span>Nationality:</span> 🇧🇷 Brazilian</p>
+              <p><span>Championships:</span> 3 (1988, 1990, 1991)</p>
+              <p><span>Wins:</span> 41</p>
             </div>
-            <p class="desc">Iconic for raw speed and intensity — especially legendary in wet conditions.</p>
+            <p class="desc">Iconic for raw speed and intensity — especially legendary in wet conditions. A driving perfectionist with aggressive spirit and pure racecraft.</p>
           </article>
 
           <!-- Juan Manuel Fangio -->
@@ -762,10 +863,11 @@
             </div>
             <div class="driverName"><h3>Juan Manuel Fangio</h3><span class="tag">Classic</span></div>
             <div class="meta">
-              <p><span>Nationality:</span> Argentine</p>
-              <p><span>Championships:</span> 5</p>
+              <p><span>Nationality:</span> 🇦🇷 Argentine</p>
+              <p><span>Championships:</span> 5 (1951, 1954–1957)</p>
+              <p><span>Wins:</span> 24</p>
             </div>
-            <p class="desc">A pioneer of the early era — calm, clinical, and historically dominant.</p>
+            <p class="desc">A true pioneer of the early era — calm, clinical, and historically dominant. Set the blueprint for precision driving and legendary racecraft.</p>
           </article>
 
           <!-- Alain Prost -->
